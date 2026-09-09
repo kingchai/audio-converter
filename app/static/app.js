@@ -203,7 +203,7 @@
     if (job.status === "success") {
       const link = document.createElement("a");
       link.className = "download-button";
-      link.href = `/api/download/${encodeURIComponent(job.id)}`;
+      link.href = `api/download/${encodeURIComponent(job.id)}`;
       link.download = job.output_filename || "converted.mp3";
       link.innerHTML = "下载 <span aria-hidden=\"true\">↓</span>";
       actions.append(link);
@@ -251,7 +251,7 @@
   async function pollJobs() {
     if (!state.jobs.length) return;
     try {
-      const responses = await Promise.all(state.jobs.map((job) => fetch(`/api/convert/${encodeURIComponent(job.id)}`, { credentials: "same-origin" }).then(responseJson)));
+      const responses = await Promise.all(state.jobs.map((job) => fetch(`api/convert/${encodeURIComponent(job.id)}`, { credentials: "same-origin" }).then(responseJson)));
       state.jobs = responses.map((payload) => payload.data);
       renderResults();
       if (state.jobs.some((job) => job.status === "queued" || job.status === "converting")) {
@@ -279,7 +279,7 @@
     state.files.forEach((file) => formData.append("files", file, file.name));
     formData.append("bitrate", document.querySelector("input[name=bitrate]:checked").value);
     try {
-      const payload = await fetch("/api/convert", { method: "POST", body: formData, credentials: "same-origin" }).then(responseJson);
+      const payload = await fetch("api/convert", { method: "POST", body: formData, credentials: "same-origin" }).then(responseJson);
       state.jobs = payload.data || [];
       renderResults();
       resultsSection.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -305,7 +305,7 @@
     const ids = JSON.parse(downloadAllButton.dataset.jobIds || "[]");
     if (ids.length < 2) return;
     try {
-      const response = await fetch("/api/download-batch", {
+      const response = await fetch("api/download-batch", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "same-origin",
@@ -326,7 +326,7 @@
 
   async function loadCapabilities() {
     try {
-      const payload = await fetch("/api/capabilities", { credentials: "same-origin" }).then(responseJson);
+      const payload = await fetch("api/capabilities", { credentials: "same-origin" }).then(responseJson);
       state.maxFiles = payload.max_files || state.maxFiles;
       state.maxFileSize = payload.max_file_size || state.maxFileSize;
       state.maxTotalSize = payload.max_total_size || state.maxTotalSize;
