@@ -1,0 +1,2 @@
+Flask==3.1.1
+Gunicorn==23.0.0

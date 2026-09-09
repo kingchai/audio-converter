@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#f4f0e8" />
+    <meta name="description" content="SONORA 在线音频转 MP3 工具，批量转换，转换完成后自动清理文件。" />
+    <title>声转 SONORA · 音频转 MP3</title>
+    <link rel="stylesheet" href="/assets/styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="site-header">
+        <a class="brand" href="/" aria-label="SONORA 首页">
+          <span class="brand-mark" aria-hidden="true">
+            <span></span><span></span><span></span><span></span><span></span>
+          </span>
+          <span class="brand-copy">
+            <strong>声转</strong>
+            <small>SONORA</small>
+          </span>
+        </a>
+        <div class="header-note">
+          <span class="status-dot" aria-hidden="true"></span>
+          <span>不留文件的转换工具</span>
+        </div>
+      </header>
+
+      <main>
+        <section class="hero-grid" aria-labelledby="page-title">
+          <div class="hero-copy">
+            <p class="eyebrow"><span>01</span> AUDIO WORKSHOP</p>
+            <h1 id="page-title">把声音，<em>变成 MP3</em></h1>
+            <p class="hero-lede">简单、快速、不留文件。把常见音频或视频里的声音，转换成更好分享的 MP3。</p>
+            <div class="hero-meta" aria-label="服务特点">
+              <span>批量转换</span>
+              <span>最高 320 kbps</span>
+              <span>30 分钟后自动清理</span>
+            </div>
+          </div>
+          <div class="hero-wave" aria-hidden="true">
+            <svg viewBox="0 0 480 180" role="presentation">
+              <path class="wave wave-back" d="M0 91 C30 91 30 55 60 55 S90 128 120 128 S150 75 180 75 S210 111 240 111 S270 40 300 40 S330 135 360 135 S390 82 420 82 S450 101 480 101" />
+              <path class="wave wave-front" d="M0 91 C30 91 30 70 60 70 S90 115 120 115 S150 84 180 84 S210 101 240 101 S270 62 300 62 S330 121 360 121 S390 87 420 87 S450 96 480 96" />
+            </svg>
+            <span>listen less. convert more.</span>
+          </div>
+        </section>
+
+        <section class="workspace" aria-label="音频转换工作区">
+          <div class="workspace-head">
+            <div>
+              <p class="section-label">DROP ZONE</p>
+              <h2>放入你的音频</h2>
+            </div>
+            <button class="text-button" id="clearButton" type="button" hidden>清空列表 <span aria-hidden="true">↗</span></button>
+          </div>
+
+          <div class="drop-zone" id="dropZone" tabindex="0" role="button" aria-controls="fileInput" aria-label="上传音频文件">
+            <input id="fileInput" type="file" multiple hidden accept=".wav,.m4a,.aac,.flac,.ogg,.oga,.wma,.aiff,.aif,.mp3,.mp4,.mov,.webm,audio/*,video/*" />
+            <div class="drop-art" aria-hidden="true">
+              <div class="drop-ring ring-one"></div>
+              <div class="drop-ring ring-two"></div>
+              <div class="drop-core">
+                <span class="upload-arrow">↑</span>
+              </div>
+            </div>
+            <div class="drop-copy">
+              <strong>拖入音频文件</strong>
+              <span>或点击这里选择文件</span>
+            </div>
+            <div class="drop-foot">
+              <span>WAV · M4A · AAC · FLAC · OGG · WMA</span>
+              <span>单文件 ≤ 200 MB</span>
+            </div>
+          </div>
+
+          <div class="notice" id="notice" role="status" aria-live="polite" hidden>
+            <span class="notice-symbol" aria-hidden="true">i</span>
+            <p></p>
+            <button type="button" aria-label="关闭提示">×</button>
+          </div>
+
+          <div class="file-section" id="fileSection" hidden>
+            <div class="section-row">
+              <div>
+                <p class="section-label">YOUR FILES</p>
+                <h2><span id="fileCount">0</span> 个文件准备好了</h2>
+              </div>
+              <div class="queue-size" id="queueSize">0 B</div>
+            </div>
+            <div class="file-list" id="fileList"></div>
+          </div>
+
+          <div class="control-panel" id="controlPanel" hidden>
+            <div class="quality-control">
+              <div>
+                <p class="section-label">OUTPUT QUALITY</p>
+                <strong>MP3 音质</strong>
+              </div>
+              <div class="quality-options" role="radiogroup" aria-label="MP3 音质">
+                <label class="quality-option">
+                  <input type="radio" name="bitrate" value="128" />
+                  <span><b>128</b><small>kbps · 轻量</small></span>
+                </label>
+                <label class="quality-option is-selected">
+                  <input type="radio" name="bitrate" value="192" checked />
+                  <span><b>192</b><small>kbps · 推荐</small></span>
+                </label>
+                <label class="quality-option">
+                  <input type="radio" name="bitrate" value="320" />
+                  <span><b>320</b><small>kbps · 高保真</small></span>
+                </label>
+              </div>
+            </div>
+            <button class="primary-button" id="convertButton" type="button">
+              <span class="button-label">开始转换</span>
+              <span class="button-arrow" aria-hidden="true">→</span>
+            </button>
+          </div>
+        </section>
+
+        <section class="results-section" id="resultsSection" hidden aria-label="转换结果">
+          <div class="results-head">
+            <div>
+              <p class="section-label">CONVERSION ROOM</p>
+              <h2 id="resultsTitle">转换结果</h2>
+            </div>
+            <button class="outline-button" id="downloadAllButton" type="button" hidden>
+              <span>下载全部</span><span aria-hidden="true">↓</span>
+            </button>
+          </div>
+          <div class="result-summary" id="resultSummary"></div>
+          <div class="file-list result-list" id="resultList"></div>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <div class="privacy-line"><span class="lock-icon" aria-hidden="true">⌁</span> 文件只用于本次转换，完成后自动删除，不会保存或分享。</div>
+        <div class="footer-bottom">
+          <span>SONORA / 2026</span>
+          <span>LOCAL-FEEL · SERVER-POWERED</span>
+        </div>
+      </footer>
+    </div>
+    <script src="/assets/app.js" defer></script>
+  </body>
+</html>

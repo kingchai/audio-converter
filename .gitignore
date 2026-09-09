@@ -1,0 +1,8 @@
+__pycache__/
+*.py[cod]
+.venv/
+.env
+.DS_Store
+instance/jobs/*
+!instance/jobs/.gitkeep
+.pytest_cache/

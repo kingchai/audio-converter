@@ -1,0 +1,16 @@
+[Unit]
+Description=SONORA audio converter
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/projects/audio-converter
+EnvironmentFile=/opt/projects/audio-converter/.env
+ExecStart=/opt/projects/venv/bin/gunicorn --workers 1 --threads 4 --timeout 960 --bind 127.0.0.1:8010 wsgi:app
+Restart=always
+RestartSec=3
+PrivateTmp=true
+NoNewPrivileges=true
+
+[Install]
+WantedBy=multi-user.target
